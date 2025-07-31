@@ -244,6 +244,14 @@
       
     }
 
+    .herof .create-note {
+        align-items: start;
+        margin-top: 50px;
+    }
+
+
+
+
 
     .landing-page-container {
         padding: 50px 30px 100px !important;
@@ -255,8 +263,17 @@
         gap: 1rem;
         padding: 0 20px;
         height: auto;
-        margin-top: 48px;
+        margin-top: 45px;
         align-items: center;
+    }
+
+    .navbar .second-menu a {
+        font-size: 2rem !important;
+    }
+
+    .navbar .second-menu {
+        padding: 20px 100px;
+        height: 70px;
     }
 
      
@@ -418,6 +435,12 @@
     .notes-description-box h4 {
         font-size: 1rem;
         width: 30%;
+    }
+
+
+    .herof .notes-box .box .save-btn {
+        height: 14%;
+        top: 75%;
     }
 
 

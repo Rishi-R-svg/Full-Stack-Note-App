@@ -296,6 +296,12 @@ const [searchTerm,setSearchTerm] = useState('')
          onChange={(e)=> handleSearch(e.target.value)}
          />
 
+
+
+            
+
+
+
           {notes.map((newNote) => {
             return (
               <div
