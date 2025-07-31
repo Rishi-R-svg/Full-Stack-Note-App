@@ -261,9 +261,9 @@
         flex-direction: row;
         width: 100%;
         gap: 1rem;
-        padding: 0 20px;
+        padding: 10px 20px;
         height: auto;
-        margin-top: 9.5%;
+        margin-top: 70px;
         align-items: center;
     }
 
@@ -296,7 +296,7 @@
 
 
     .herof .notes-box {
-        margin-top: 80px;
+        margin-top: 10px;
     }
 
 
@@ -394,7 +394,7 @@
         width: 30%;
         left: 35%;
         font-size: 0.7rem;
-        top: 1.5%;
+        top: 1.9%;
     }
 
     .about .image {
@@ -494,6 +494,11 @@
     }
 
 
+    .herof .plus i {
+        font-size: 2rem;
+    }
+
+
 
 }
 
@@ -551,7 +556,7 @@
 @media(width<386px) {
     .search-bar {
         padding: 5px 10px;
-        top: 2%;
+        top: 2.5%;
     }
 }
 

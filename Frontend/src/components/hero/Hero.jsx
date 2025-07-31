@@ -250,9 +250,7 @@ const [searchTerm,setSearchTerm] = useState('')
           className={togglev ? "plus active" : "plus"}
           onClick={handleToggle}
         >
-          <span>
-            <div>+</div>
-          </span>
+         <i class="fa-solid fa-plus"></i>
         </div>
 
       
