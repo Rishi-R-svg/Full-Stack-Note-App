@@ -1,0 +1,538 @@
+
+
+
+
+
+
+@media(width<1457px){
+    .herof .notes-box {
+        margin-top: 220px;
+    }
+
+    
+     
+
+  
+}
+
+
+
+
+
+
+
+@media (width<1450px) {
+    .landing-page-container h1 {
+        font-size: 4rem;
+
+    }
+
+   
+
+    .herof::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .login-form form {
+        width: auto !important;
+    }
+
+    
+
+}
+
+
+
+@media(width<1376px){
+    .text-content {
+        font-size: 3rem !important;
+        margin-top: 70px !important;
+    }
+
+    .about .main-box .image img {
+        width: 500px !important;
+    }
+
+
+   
+
+
+}
+
+
+@media(width<1278px){
+   .about .second-box h1 {
+    font-size: 2rem !important;
+   }
+   .text-content {
+    padding-top: 0 !important;
+   }
+}
+
+
+@media(width<1184px){
+    .about .second-box ul li {
+        font-size: 1rem !important;
+    }
+
+    .text-content {
+        font-size: 2.5rem !important;
+    }
+
+  
+}
+
+
+
+@media(width<1068px){
+    .about .main-box {
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+    
+
+    .about .image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about .image img {
+        width: 400px !important;
+    }
+
+
+    .about .second-box {
+        margin-top: 100px !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+@media (width<1052px) {
+    .landing-page-container h1 {
+        font-size: 3.5rem;
+
+    }
+
+    .landing-page-container {
+        overflow-y: scroll;
+
+    }
+
+
+    .landing-page-container::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .herof .notes-box { 
+        padding: 0 30px;
+        padding-bottom: 100px;
+    }
+
+
+
+
+
+}
+
+
+
+@media (width<887px){
+    .notes-description-box {
+        width: 200px;
+    }
+}
+
+
+
+@media(width<742px) {
+    .navbar {
+        padding: 10px 30px;
+    }
+
+
+    .landing-page-container h1 {
+        font-size: 3rem !important;
+    }
+
+    .navbar .first-menu a {
+        font-size: 0.8rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+    .user-box .name {
+        font-size: 0.8rem;
+    }
+
+   
+
+   
+
+}
+
+
+
+
+@media(width<719px){
+    .herof .create-note .create-box {
+        padding: 15px ;
+        height: auto;
+    }
+
+    .search-bar {
+        left: 38%;
+    }
+
+
+
+
+
+
+}
+
+
+
+@media(width<662px){
+    .about {
+        height: 100% !important;
+        width: 100% !important;
+        padding: 0 50px !important;
+        padding-bottom: 100px !important;
+        
+    }
+    
+    .text-content {
+        margin-top: 0 !important;
+    }
+
+    .about .main-box .image img {
+        width: 400px !important;
+    }
+}
+
+
+
+
+
+@media(width<684px) {
+    .notes-description-box {
+        width: 180px;
+    }
+}
+
+
+
+@media(width<619px){
+    .navbar .first-menu {
+        display: none;
+    }
+
+
+    .navbar .second-menu {
+        display: flex;
+       
+      
+    }
+
+
+    .landing-page-container {
+        padding: 50px 30px 100px !important;
+    }
+
+    .notes-description-box {
+        flex-direction: row;
+        width: 100%;
+        gap: 1rem;
+        padding: 0 20px;
+        height: auto;
+        margin-top: 48px;
+        align-items: center;
+    }
+
+     
+
+    .notes-with-title {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+       height: auto;
+       overflow: hidden;
+       overflow: scroll;
+    }
+
+    .notes-with-title::-webkit-scrollbar{
+       
+        width: 0;
+        height: 0;
+    }
+
+
+
+    .herof .notes-box {
+        margin-top: 10px;
+    }
+
+
+
+
+
+    .notes-description-box h4 {
+        width: 20%;
+        margin-bottom: 0;
+    }
+
+    .desbox {
+        margin-right: 10px;
+        padding: 5px 10px;
+        overflow: hidden;
+       
+        min-width: 50px !important;
+      
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+      
+      
+    }
+
+     .desbox::-webkit-scrollbar{
+        height: 0;
+     }
+
+
+
+
+    .desbox h5 {
+        text-align: left;
+        height: 100%;
+        min-width: 100%;
+        overflow-x: scroll;
+        width: 30px !important;
+    }
+
+
+    .desbox h5::-webkit-scrollbar{
+        width: 0;
+        height: 0;
+    }
+
+  
+
+
+    .herof {
+        flex-direction: column;
+    }
+
+    .search-bar {
+      left: 30%;
+      top: 1%;
+      z-index: 10000;
+      padding: 10px 40px;
+      width: 40%;
+      color: white;
+      background-color: rgba(255, 255, 255, 0.082);
+    }
+
+
+
+}
+
+
+
+@media(width<534px) {
+
+    .landing-page-container h1 {
+        font-size: 2.5rem  !important;
+    }
+
+    .create-box #first {
+        width: 70%;
+    }
+
+}
+
+
+
+@media(width<496px){
+    .user-box img {
+        width: 10px;
+    }
+
+    .user-box .name {
+        font-size: 0.6rem;
+    }
+
+    .search-bar {
+        padding: 10px 20px;
+        width: 30%;
+        left: 35%;
+        font-size: 0.7rem;
+        top: 1.5%;
+    }
+
+    .about .image {
+       padding-bottom: 20px;
+    }
+
+
+    .text-content {
+        font-size: 2rem !important;
+    }
+
+    .about .second-box h1 {
+        font-size: 1.4rem !important;
+    }
+
+    .about .second-box ul li {
+        font-size: 0.8rem !important;
+    }
+
+}
+
+
+
+
+@media(width<443px){
+    .herof .notes-box {
+        grid-template-columns: repeat(auto-fit,minmax(300px,auto));
+        padding: 0 5px 150px 5px;
+       
+      
+    }
+
+
+    .about .second-box {
+        margin-top: 0 !important;
+    }
+
+
+    .notes-description-box h4 {
+        font-size: 1rem;
+        width: 30%;
+    }
+
+
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .herof .notes-box .box #first {
+        font-size: 1rem;
+        padding: 5px 25px;
+        width: 100%;
+       padding: 5px 10px;
+       
+        border-radius: 5px;
+        height: 15%;
+    }
+
+    .herof .notes-box .box #second {
+        font-size: 0.8rem;
+         padding: 5px 10px;
+         
+       
+        border-radius: 5px;
+    }
+
+    .herof .notes-box .box {
+        height: 300px;
+        padding: 20px 20px;
+    }
+
+    .herof .plus span div {
+      top: -14%;
+        font-size: 3rem;
+    }
+
+  
+.choose-colors {
+    height: 20px;
+    width: 100%;
+    gap: 2px;
+}
+
+
+ .herof .plus {
+        height: 60px;
+        width: 60px;
+        right: 50px;
+        bottom: 150px;
+        
+    }
+
+
+
+}
+
+
+
+
+
+@media(width<412px) {
+    .landing-page-container h1 {
+        font-size: 2rem !important;
+    }
+
+
+    .login-form {
+        padding: 0 20px !important;
+    }
+
+    .login-form label {
+        font-size: 1rem !important;
+    }
+
+    .login-form input {
+        font-size: 0.8rem !important;
+    }
+
+    .login-form p, a {
+        font-size: 0.8rem !important;
+    }
+
+    .login-form button {
+        font-size: 0.8rem !important;
+    }
+
+    .third-box h3 a {
+       font-size: 1rem !important;
+    }
+
+    .third-box h3 {
+        font-size: 1rem !important;
+    }
+
+    .about .second-box ul {
+        padding-left: 0 !important;
+    }
+
+    .about {
+        padding: 0 30px !important;
+    }
+
+}
+
+
+
+
+@media(width<386px) {
+    .search-bar {
+        padding: 5px 10px;
+        top: 2%;
+    }
+}
+
+
+
+
+
+

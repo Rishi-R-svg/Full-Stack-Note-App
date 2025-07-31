@@ -1,0 +1,150 @@
+.login {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(rgb(91, 63, 214),rgb(167, 167, 218));
+}
+
+
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.login-form form {
+    display: flex;
+    padding: 50px;
+    font-family: poppins;
+    gap: 1rem;
+    flex-direction: column;
+    
+    width: 30%;
+    background: rgb(0, 0, 0);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+}
+
+
+.login-form label {
+    background:linear-gradient(rgb(255, 255, 255),rgb(255, 255, 255)) ;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.login-form label .showbtn {
+    position: absolute;
+    font-size: 0.8rem;
+    right: 3%;
+    top: 60%;
+    
+    color: rgb(91, 63, 214);
+    z-index: 100001;
+
+    
+}
+
+
+
+
+
+
+
+
+.login-form input {
+    border: none;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1rem;
+    
+}
+
+
+.login-form p,a {
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+
+
+.login-form button {
+    background: linear-gradient(45deg,rgb(91, 63, 214),rgb(128, 128, 232));
+    padding: 10px;
+    font-family: poppins;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1.1rem;
+}
+.login-form button:hover {
+    background: linear-gradient(45deg,rgb(255, 255, 255rgb(255, 255, 255)8));
+    padding: 10px;
+    font-family: poppins;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1.1rem;
+}
+
+
+.login-email-error, .login-password-error, .login-username-error {
+    outline: 2px solid rgb(224, 88, 88);
+}
+
+
+
+.pass-input {
+    padding-right: 60px !important;
+}
+
+
+
+
+
+
+
+
+.popup-msg {
+    width: 500px;
+    height: 100px;
+    position: absolute;
+    top: -500px;
+    left: 35%;
+    background-color: rgb(39, 127, 56);
+    border-radius: 0  0 30px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    transition: 0.2s ease-in-out;
+
+
+}
+
+.popup-msg.active {
+    top: 10px;
+}
+
+.popup-msg h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: white;
+
+}
+
+
+
+
+
+

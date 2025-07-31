@@ -1,0 +1,29 @@
+.toast {
+    position: absolute;
+    left: 30%;
+    top: -500px !important;
+    margin: 20px auto;
+    height: 100px;
+    width: 600px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 1px 2px 4px 4px rgba(0, 0, 0, 0.085);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+
+    
+
+}
+
+.toast.active {
+    top: 50px  !important;
+}
+
+
+.toast h1 {
+    font-family: poppins;
+    letter-spacing: 1px;
+    color: white;
+    
+}
