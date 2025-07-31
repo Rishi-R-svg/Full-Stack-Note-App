@@ -373,7 +373,7 @@
     }
 
     .create-box #first {
-        width: 70%;
+        width: 100%;
     }
 
 }
@@ -496,6 +496,11 @@
 
     .herof .plus i {
         font-size: 2rem;
+    }
+
+
+    .herof .create-note .create-box {
+        width: 95%;
     }
 
 
