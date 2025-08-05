@@ -124,7 +124,16 @@ const [searchTerm,setSearchTerm] = useState('')
           setSidebarArr((prevNotes)=> [...prevNotes,...notesWithFlag])
           setAllNotes((prevNotes)=> [...prevNotes,...notesWithFlag])
 
-          console.log(notesWithFlag);
+          
+
+        
+          
+
+
+         
+
+
+
         } else {
           console.log("result is not an array this is ", typeof [result]);
         }
@@ -250,7 +259,7 @@ const [searchTerm,setSearchTerm] = useState('')
           className={togglev ? "plus active" : "plus"}
           onClick={handleToggle}
         >
-         <i class="fa-solid fa-plus"></i>
+         <i className="fa-solid fa-plus"></i>
         </div>
 
       
@@ -283,6 +292,8 @@ const [searchTerm,setSearchTerm] = useState('')
 
 
         {/* /// IN THIS CONTAINER ALL THE NOTES WILL RENDER FROM THE BACKEND /// */}
+
+        
         <div className="notes-box">
 
         {/* // SEARCH BAR  */}

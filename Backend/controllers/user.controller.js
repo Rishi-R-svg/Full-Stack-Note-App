@@ -56,14 +56,37 @@ const registerUser = async function (req, res) {
   }
 };
 
+
+///   login user
+
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+   
     
     
-    const checkUser = await User.findOne({ email });
+    const checkUser = await User.findOne({$or:[
+      {email},{username:email}
+    ]});
     
     const newPass = await bcrypt.compare(password, checkUser.password);
+
+
+     const userId = checkUser._id;
+
+
+
+    
+
+
+
+
+
+
+
+    
 
     const accesToken = JWT.sign(
       { id: loginUser._id },
@@ -79,11 +102,24 @@ const loginUser = async (req, res) => {
     );
 
 
+
+
+
+     await User.findByIdAndUpdate(userId,{
+      refreshToken : refreshToken
+     })
+
+
+
+
+       
+
+
    
 
     
 
-    if (email && newPass) {
+    if (email || newPass) {
       return res.status(201).send({
         succes: true,
         message: "Login successed",

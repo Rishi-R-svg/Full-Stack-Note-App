@@ -20,7 +20,7 @@ const port = process.env.PORT;
 
 app.use(express.json())
 app.use(cors({
-    origin: `${process.env.FRONTEND_URL} `,
+    origin: `${process.env.TEST_URL}`,
     credentials: true
 }))
 

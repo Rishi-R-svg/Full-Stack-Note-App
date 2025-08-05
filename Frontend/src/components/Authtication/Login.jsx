@@ -89,7 +89,7 @@ const handleType = ()=>{
       <div className="login-form">
         <form onSubmit={handleSubmit(onsubmit)}> 
         
-          <label htmlFor="email">  Email: <br/>
+          <label htmlFor="email"> Username or Email: <br/>
             <input type="email" {...register('email', {required:true, minLength:5})}            className={errors.email?'login-email-error':''}     />
           </label>
           <label htmlFor="password"> Password : <br />
