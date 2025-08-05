@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../Services/Axios.js'
 import toast from 'react-hot-toast'
+import { erroHandler } from '../utils/Error.Handler.js'
 
 
 
@@ -58,7 +59,7 @@ const onsubmit = async (data)=> {
     navigate('/login')
   }
 
-  console.log(result)
+  
   
 
 
@@ -68,7 +69,7 @@ const onsubmit = async (data)=> {
 
  } catch (err) {
    console.log(err)
-   toast.error('Failed to create ',errorToastStyling)
+   toast.error(erroHandler(err),errorToastStyling)
 
  }
 

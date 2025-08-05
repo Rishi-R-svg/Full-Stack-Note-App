@@ -74,7 +74,7 @@ const [searchTerm,setSearchTerm] = useState('')
 
       const result = response.data;
 
-      console.log("this is result", result);
+      
 
       if (result && result.newNote) {
         setNotes((note) => [...note, result.newNote]);
@@ -106,13 +106,13 @@ const [searchTerm,setSearchTerm] = useState('')
       try {
         const Uid = JSON.parse(localStorage.getItem("userdata"));
 
-        console.log(Uid.id, "this is userid");
+       
 
         const allNotes = await getNotes(Uid.id);
 
         const result = allNotes.data;
 
-        console.log(result.getnote);
+       
 
         if (result && result.getnote) {
           const notesWithFlag = result.getnote.map((note) => ({

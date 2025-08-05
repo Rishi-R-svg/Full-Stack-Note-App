@@ -44,7 +44,7 @@ const onsubmit = async (data)=> {
 
     const result = response.data;
 
-    console.log(result)
+   
 
     localStorage.setItem('userdata',JSON.stringify(result))
 
@@ -90,7 +90,7 @@ const handleType = ()=>{
         <form onSubmit={handleSubmit(onsubmit)}> 
         
           <label htmlFor="email"> Username or Email: <br/>
-            <input type="email" {...register('email', {required:true, minLength:5})}            className={errors.email?'login-email-error':''}     />
+            <input type="text" {...register('email', {required:true, minLength:5})}            className={errors.email?'login-email-error':''}     />
           </label>
           <label htmlFor="password"> Password : <br />
             <input type={type? 'text':'password'}  {...register('password', {required:true, minLength:5})}            className={errors.email?'login-password-error pass-input':'pass-input'}     />

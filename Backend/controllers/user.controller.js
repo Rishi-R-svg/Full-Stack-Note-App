@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import JWT from "jsonwebtoken";
 
 import bcrypt from "bcryptjs";
+import { sendEmail } from "../services/mail.service.js";
 
 
 
@@ -11,7 +12,7 @@ const registerUser = async function (req, res) {
   try {
     const { username, email, password, color } = req.body;
 
-    console.log(username);
+   
 
     if (
       [username, email, password].some((field) => {
@@ -23,11 +24,13 @@ const registerUser = async function (req, res) {
         message: "please fill the required fields",
       });
 
-    let existingUser = await User.findOne({ username });
+    let existingUser = await User.findOne({ $or: [
+      {email}, {username}
+    ] });
 
     if (existingUser) {
       return res.status(400).send({
-        message: "username already exists",
+        message: "already exists",
       });
     }
 
@@ -47,6 +50,18 @@ const registerUser = async function (req, res) {
       message: "new user created",
       newUser
     });
+
+
+     await sendEmail(
+      email,
+      `Welcome ${username} to NotesApp !!`,
+      `Hii, ${username} you've just registered in our NotesApp service.
+      Enjoy our app and if you liked our app then please star our app on Github
+      `
+
+    )
+
+
   } catch (error) {
     console.log(error);
     res.status(500).send({

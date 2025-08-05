@@ -40,7 +40,7 @@ const About = () => {
 
           </h1>
 
-           <h3>Give your feedback <NavLink to="https://portfolio-frontend-ysyt.onrender.com" > here</NavLink></h3>
+           <h3>Give your feedback <NavLink to="https://portfolio-zh3k.onrender.com" > here</NavLink></h3>
 
            <h1 className='last-heading' >Thank you for using Notes App</h1>
       </div>

@@ -15,6 +15,8 @@ const Navbar = () => {
 
 const [username, setUsername] = useState('Guest')
 
+const [checkUser, setCheckUser] = useState(false)
+
 
 const logoutHandler = ()=> {
   localStorage.clear('userdata')
@@ -26,16 +28,21 @@ const logoutHandler = ()=> {
 }
 
 
+
 useEffect(()=>{
+  
   const userSavedData = JSON.parse(localStorage.getItem('userdata'))
 
  
 
   if (userSavedData) {
     setUsername(userSavedData.user)
+    setCheckUser(true)
+   
   }
   else {
     setUsername('Guest')
+    setCheckUser(false)
   }
 
 },[])
@@ -46,7 +53,7 @@ useEffect(()=>{
       <div className="logo">NoteApp</div>
       <ul className='first-menu'>
        <NavLink to='/'>Home</NavLink>
-       <NavLink to='/notes' >Notes</NavLink>
+       {checkUser? <NavLink to='/notes' >Notes</NavLink>:''}
        <NavLink to='/about'>About</NavLink>
        
        
@@ -54,9 +61,9 @@ useEffect(()=>{
       </ul>
       <ul className='second-menu'>
        <NavLink to='/'><i className="fa-solid fa-house"></i></NavLink>
-       <NavLink to='/notes' ><i className="fa-solid fa-notes-medical"></i></NavLink>
-       <NavLink to='/about'><i className="fas fa-building"></i>
-</NavLink>
+       {checkUser?  <NavLink to='/notes' ><i className="fa-solid fa-notes-medical"></i></NavLink> : '' }
+       <NavLink to='/about'><i className="fas fa-building"></i></NavLink>
+
        
        
       
