@@ -5,6 +5,12 @@ import { checkLogin } from '../Middlewares/NoteMiddlWare.js';
 const notesRouter = express.Router();
 
 /// Create Notes
+notesRouter.get('/',(req,res)=>{
+    res.send("server is awake")
+})
+notesRouter.get('/pong',(req,res)=>{
+    res.send("ping")
+})
 notesRouter.post('/create', checkLogin , createNote)
 /// Get all Notes
 notesRouter.post('/get/:userId', checkLogin , getNotes)

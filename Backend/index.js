@@ -34,6 +34,14 @@ app.use('/api/user',userRouter)
 
 app.use('/api/notes',notesRouter)
 
+app.get("/", (req, res) => {
+  res.send("Server is awake");
+});
+
+app.get("/ping", (req, res) => {
+  res.json({ message: "pong" });
+});
+
 
 
 
