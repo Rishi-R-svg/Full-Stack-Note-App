@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useForm } from "react-hook-form";
 import "./Hero.css";
 import '../Media.css'
-
 
 import cross from "../assets/cross-checkbox-svgrepo-com.svg";
 import edit from "../assets/edit-fill-1480-svgrepo-com.svg";
@@ -16,7 +15,6 @@ import {
 } from "../Services/Axios";
 import toast from "react-hot-toast";
 
-
 const Hero = () => {
   const successToastStyling = {
     className: "toast-style-success",
@@ -28,26 +26,16 @@ const Hero = () => {
     icon: "",
   };
 
-/// Second array
-
-const [allNotes,setAllNotes] = useState([])
-
-/// Input state declaration
-
-const [searchTerm,setSearchTerm] = useState('')
+  // Single source of truth for all notes
+  const [allNotes, setAllNotes] = useState([]);
   
-
-  /// Initial Notes State
-  const [notes, setNotes] = useState([]);
-
-  /// Sidebar Notes
-
-  const [sidebarArr,setSidebarArr] = useState([])
-
-  /// Fetched function for useffect hook to not render 2 times
+  // Filter states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  
+  const [togglev, setToggle] = useState(false);
   const fetched = useRef(false);
 
-  /// Form Handling
   const {
     register,
     handleSubmit,
@@ -55,90 +43,47 @@ const [searchTerm,setSearchTerm] = useState('')
     formState: { isSubmitting, errors },
   } = useForm();
 
-  /// Form subbmiting and creating new Note!
+  // Memoized filtered notes - only recalculates when dependencies change
+  const displayedNotes = useMemo(() => {
+    let filtered = allNotes;
 
-  const onSubmit = async (data) => {
-    try {
-      const userId = JSON.parse(localStorage.getItem("userdata"));
-
-      const newN = {
-        title: data.title,
-        content: data.content,
-        color: data.color || "red",
-        id: Date.now(),
-        isEditable: false,
-        createdBy: userId?.id,
-      };
-
-      const response = await creatNewNote(newN);
-
-      const result = response.data;
-
-      
-
-      if (result && result.newNote) {
-        setNotes((note) => [...note, result.newNote]);
-
-        setAllNotes((note)=>[ ...note, result.newNote])  
-
-        
-
-        setSidebarArr((note)=> [...note, result.newNote])     
-
-        toast.success(`Added Succesfully`, successToastStyling);
-
-        reset();
-
-       
-      }
-
-      setToggle(false);
-    } catch (error) {
-      console.log(error);
-      toast.error("Failded to create Note", errorToastStyling);
+    // Filter by selected note
+    if (selectedNoteId) {
+      filtered = filtered.filter(note => note._id === selectedNoteId);
     }
 
-    // Close form after submission
-  };
+    // Filter by search term
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(note =>
+        note.title.toLowerCase().includes(searchLower) ||
+        note.content.toLowerCase().includes(searchLower)
+      );
+    }
 
+    return filtered;
+  }, [allNotes, searchTerm, selectedNoteId]);
+
+  // Fetch notes on mount
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const Uid = JSON.parse(localStorage.getItem("userdata"));
+        const response = await getNotes(Uid.id);
+        const result = response.data;
 
-       
-
-        const allNotes = await getNotes(Uid.id);
-
-        const result = allNotes.data;
-
-       
-
-        if (result && result.getnote) {
+        if (result?.getnote) {
+          // Single state update with mapped data
           const notesWithFlag = result.getnote.map((note) => ({
             ...note,
             isEditable: false,
           }));
-
-          setNotes((prevNotes) => [...prevNotes, ...notesWithFlag]);
-          setSidebarArr((prevNotes)=> [...prevNotes,...notesWithFlag])
-          setAllNotes((prevNotes)=> [...prevNotes,...notesWithFlag])
-
           
-
-        
-          
-
-
-         
-
-
-
-        } else {
-          console.log("result is not an array this is ", typeof [result]);
+          setAllNotes(notesWithFlag);
         }
       } catch (error) {
-        console.log("backend error", error.response.data.message);
+        console.log("backend error", error.response?.data?.message);
+        toast.error("Failed to load notes", errorToastStyling);
       }
     };
 
@@ -148,107 +93,105 @@ const [searchTerm,setSearchTerm] = useState('')
     }
   }, []);
 
-  const [togglev, setToggle] = useState(false);
+  const onSubmit = async (data) => {
+    try {
+      const userId = JSON.parse(localStorage.getItem("userdata"));
+
+      const newN = {
+        title: data.title,
+        content: data.content,
+        color: data.color || "rgb(224, 82, 82)",
+        id: Date.now(),
+        isEditable: false,
+        createdBy: userId?.id,
+      };
+
+      const response = await creatNewNote(newN);
+      const result = response.data;
+
+      if (result?.newNote) {
+        // Single state update
+        setAllNotes(prev => [...prev, result.newNote]);
+        toast.success(`Added Successfully`, successToastStyling);
+        reset();
+      }
+
+      setToggle(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to create Note", errorToastStyling);
+    }
+  };
 
   function handleToggle(e) {
     e.preventDefault();
     e.stopPropagation();
-
-    if (togglev === false) {
-      setToggle(true);
-    } else {
-      setToggle(false);
-    }
+    setToggle(prev => !prev);
   }
-
-  // Delete Note by its ID
 
   async function handleDelete(noteId) {
     try {
-      console.log(noteId);
-
-      const response = await deleteNotes(noteId);
-
-      console.log(response.data.message);
-
-      toast.success("Note Deleted ", successToastStyling);
-
-      setNotes((notes) => notes.filter((note) => note._id !== noteId));
+      await deleteNotes(noteId);
+      toast.success("Note Deleted", successToastStyling);
+      
+      // Single state update
+      setAllNotes(notes => notes.filter(note => note._id !== noteId));
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error.response?.data?.message);
+      toast.error("Failed to delete note", errorToastStyling);
     }
   }
 
   function handleEditToggle(id) {
-    setNotes((notes) =>
-      notes.map((n) => (n._id === id ? { ...n, isEditable: !n.isEditable } : n))
+    setAllNotes(notes =>
+      notes.map(n => (n._id === id ? { ...n, isEditable: !n.isEditable } : n))
     );
   }
 
   const saveEditedNote = async (id) => {
-    const editedNote = notes.find((n) => n._id === id);
+    const editedNote = allNotes.find(n => n._id === id);
 
     try {
-      const response = await updateNotes(id, {
+      await updateNotes(id, {
         title: editedNote.title,
         content: editedNote.content,
       });
 
-      const result = response.data;
-
-      console.log("This is message", result.message);
-
-      setNotes((notes) =>
-        notes.map((n) =>
-          n._id === id ? { ...n, isEditable: !n.isEditable } : n
+      setAllNotes(notes =>
+        notes.map(n =>
+          n._id === id ? { ...n, isEditable: false } : n
         )
       );
 
       toast.success("Note Updated", successToastStyling);
     } catch (error) {
       console.log("Failed to update the note", error.response?.data);
+      toast.error("Failed to update note", errorToastStyling);
     }
   };
 
+  const handleNoteNavigation = (id) => {
+    setSelectedNoteId(id);
+    setSearchTerm(''); // Clear search when navigating to specific note
+  };
 
+  const resetNavigation = () => {
+    setSelectedNoteId(null);
+    setSearchTerm('');
+  };
 
-  const handleNoteNavigation = (id)=> {
+  const handleSearch = (str) => {
+    setSearchTerm(str);
+    setSelectedNoteId(null); // Clear note selection when searching
+  };
 
-    const searchedNote = allNotes.filter((note)=>(
-      note._id === id
-    ))
-
-    setNotes(searchedNote)
-
-   
-  }
-
-
-  const resetNavigation = ()=>{
-
-     setNotes(allNotes)
-    
-  }
-
-
-  const handleSearch = (str)=>{
-    setSearchTerm(str)
-    if (str.trim() === '') {
-      return setNotes(allNotes)
-    }
-
-    const filteredNotes = allNotes.filter((note)=>{
-     return note.title.toLowerCase().includes(str.toLowerCase()) || note.content.toLowerCase().includes(str.toLowerCase())
-      
-    })
-
-     setNotes(filteredNotes)
-
-   
-  }
-
-
-
+  const updateNoteField = (noteId, field, value) => {
+    setAllNotes(notes =>
+      notes.map(note =>
+        note._id === noteId ? { ...note, [field]: value } : note
+      )
+    );
+  };
 
   return (
     <div>
@@ -259,121 +202,81 @@ const [searchTerm,setSearchTerm] = useState('')
           className={togglev ? "plus active" : "plus"}
           onClick={handleToggle}
         >
-         <i className="fa-solid fa-plus"></i>
+          <i className="fa-solid fa-plus"></i>
         </div>
 
-      
-
-
-
-        {/* /// THIS IS THS SICE-BAR BOX WHERE THE TITLE OF TODO'S WILL APPEAR */}
+        {/* Sidebar with all notes */}
         <div className="notes-description-box">
-          <h4 onClick={resetNavigation} > Show All</h4>
+          <h4 onClick={resetNavigation}>Show All</h4>
 
           <div className="notes-with-title">
-             {
-            
-            notes.map((note)=>{
-              return <div className="desbox" key={note._id} onClick={()=>handleNoteNavigation(note._id)} >
-
-                <h5>{note.title}</h5>
-
-
-
-              </div>
-            })
-            
-            } 
-            </div>
-        </div>
-
-
-
-
-
-        {/* /// IN THIS CONTAINER ALL THE NOTES WILL RENDER FROM THE BACKEND /// */}
-
-        
-        <div className="notes-box">
-
-        {/* // SEARCH BAR  */}
-
-        <input type="text"
-         className="search-bar" 
-         placeholder="Search Notes..."  
-         value={searchTerm}  
-         onChange={(e)=> handleSearch(e.target.value)}
-         />
-
-
-
-            
-
-
-
-          {notes.map((newNote) => {
-            return (
+            {allNotes.map((note) => (
               <div
-                className="box"
-                key={newNote._id || newNote.id}
-                style={{ background: newNote.color }}
+                className="desbox"
+                key={note._id}
+                onClick={() => handleNoteNavigation(note._id)}
               >
-                <textarea
-                  name="title"
-                  value={newNote.title}
-                  readOnly={!newNote.isEditable}
-                  id="first"
-                  onChange={(e) =>
-                    setNotes((notes) =>
-                      notes.map((note) =>
-                        note._id === newNote._id
-                          ? { ...note, title: e.target.value }
-                          : note
-                      )
-                    )
-                  }
-                ></textarea>
-                <textarea
-                  name="content"
-                  value={newNote.content}
-                  readOnly={!newNote.isEditable}
-                  id="second"
-                  onChange={(e) =>
-                    setNotes((notes) =>
-                      notes.map((note) =>
-                        note._id === newNote._id
-                          ? { ...note, content: e.target.value }
-                          : note
-                      )
-                    )
-                  }
-                ></textarea>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(newNote._id)}
-                >
-                  <img src={cross} alt="Delete button" />
-                </button>
-                <button
-                  className={
-                    newNote.isEditable ? "edit-btn active" : "edit-btn"
-                  }
-                  onClick={() => handleEditToggle(newNote._id)}
-                >
-                  <img src={edit} alt="Edit button" />
-                </button>
-                <div
-                  className={
-                    newNote.isEditable ? "save-btn active" : "save-btn"
-                  }
-                  onClick={() => saveEditedNote(newNote._id)}
-                >
-                  Save Changes
-                </div>
+                <h5>{note.title}</h5>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
+
+        {/* Main notes display */}
+        <div className="notes-box">
+          {/* Search bar */}
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search Notes..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+
+          {/* Display filtered notes */}
+          {displayedNotes.map((newNote) => (
+            <div
+              className="box"
+              key={newNote._id || newNote.id}
+              style={{ background: newNote.color }}
+            >
+              <textarea
+                name="title"
+                value={newNote.title}
+                readOnly={!newNote.isEditable}
+                id="first"
+                onChange={(e) => updateNoteField(newNote._id, 'title', e.target.value)}
+              />
+              <textarea
+                name="content"
+                value={newNote.content}
+                readOnly={!newNote.isEditable}
+                id="second"
+                onChange={(e) => updateNoteField(newNote._id, 'content', e.target.value)}
+              />
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(newNote._id)}
+              >
+                <img src={cross} alt="Delete button" />
+              </button>
+              <button
+                className={newNote.isEditable ? "edit-btn active" : "edit-btn"}
+                onClick={() => handleEditToggle(newNote._id)}
+              >
+                <img src={edit} alt="Edit button" />
+              </button>
+              <div
+                className={newNote.isEditable ? "save-btn active" : "save-btn"}
+                onClick={() => saveEditedNote(newNote._id)}
+              >
+                Save Changes
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Create note form */}
         <div className={togglev ? "create-note active" : "create-note"}>
           <div className="create-box">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -383,16 +286,14 @@ const [searchTerm,setSearchTerm] = useState('')
                 id="first"
                 {...register("title", { required: true, minLength: 1 })}
                 className={errors.title ? "title-error" : ""}
-              >
-                {""}
-              </textarea>
+              />
               <textarea
                 name="second"
                 id="second"
                 placeholder="Content...."
                 {...register("content", { required: true, minLength: 1 })}
                 className={errors.content ? "content-error" : ""}
-              ></textarea>
+              />
               <div className="choose-colors">
                 <input
                   type="radio"
@@ -439,7 +340,7 @@ const [searchTerm,setSearchTerm] = useState('')
                   className="sixth"
                   name="color"
                   {...register("color")}
-                  defaultValue=" linear-gradient(rgb(140, 82, 212),rgb(179, 143, 223))"
+                  defaultValue="linear-gradient(rgb(140, 82, 212),rgb(179, 143, 223))"
                 />
                 <label htmlFor="gradient3"></label>
               </div>
